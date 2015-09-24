@@ -1,7 +1,9 @@
 class TweetsController < ApplicationController
 
   def index
-    render template: 'tweets/index.html.erb', locals: { tweets: Tweet.all }
+    page = (params[:page] || 0).to_i
+    tweets = Tweet.limit(10).offset(page * 10)
+    render template: 'tweets/index.html.erb', locals: { tweets: tweets, page: page}
   end
 
   def show
@@ -13,7 +15,14 @@ class TweetsController < ApplicationController
   end
 
   def create
-
+    user = User.find(params[:id])
+    tweet = Tweet.new
+    tweet.user_id = user.id
+    tweet.message = Tweet.fetch(:tweet).fetch(:message)
+    if tweet.save
+      redirect_to
+    else
+    end
   end
 
   def update
@@ -24,3 +33,23 @@ class TweetsController < ApplicationController
 
   end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

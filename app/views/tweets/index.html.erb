@@ -1,5 +1,11 @@
-<h1>Tweets:</h1>
+<h1>&hearts; Such Arf! &hearts; &hearts; </h1>
 
+<ul>
 <% tweets.each do |tweet| %>
-  <p>id: <%= tweet.id %> tweet: <%= tweet.message %></p>
+  <li>id: <%= tweet.id %> tweet: <%= tweet.message %></li>
 <% end %>
+</ul>
+
+<%= link_to('< Prev Page', root_path(page: page - 1)) %>
+<%= link_to('Next Page >', root_path(page: page + 1)) %>
+<p><%= params.inspect %></p>
