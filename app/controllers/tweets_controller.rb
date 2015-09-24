@@ -3,7 +3,7 @@ class TweetsController < ApplicationController
   def index
     page = (params[:page] || 0).to_i
     tweets = Tweet.limit(10).offset(page * 10)
-    render template: 'tweets/index.html.erb', locals: { tweets: tweets, page: page}
+    render locals: { tweets: tweets, page: page }
   end
 
   def show
@@ -11,18 +11,18 @@ class TweetsController < ApplicationController
   end
 
   def new
-
+    user_options = User.order(name: :asc).map { |u| [u.name, u.id] }
+    render locals: {
+      tweet: Tweet.new,
+      user_options: user_options
+    }
   end
 
   def create
-    user = User.find(params[:id])
     tweet = Tweet.new
-    tweet.user_id = user.id
-    tweet.message = Tweet.fetch(:tweet).fetch(:message)
-    if tweet.save
-      redirect_to
-    else
-    end
+    tweet.message = params.fetch(:tweet).fetch(:message)
+    tweet.user_id = params.fetch(:tweet).fetch(:user_id)
+    tweet.save
   end
 
   def update

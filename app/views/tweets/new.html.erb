@@ -1,0 +1,22 @@
+<h2>New Arf Woof </h2>
+
+<% if tweet.errors.any? %>
+  <% tweet.errors.messages.each do |att, err_msg| %>
+    <p class='error'><strong><%= att %>:</strong> <%= err_msg.join %></p>
+  <% end %>
+<% end %>
+
+<%= form_for(tweet) do |f| %>
+  <p>
+  <%= f.label :message %>
+  <%= f.text_field :message %>
+  </p>
+  <p>
+  <%= f.label :user_id %>
+  <%= f.select :user_id, user_options, include_blank: true %>
+  </p>
+  <%= f.submit %>
+<% end %>
+<%= params.inspect %>
+
+
