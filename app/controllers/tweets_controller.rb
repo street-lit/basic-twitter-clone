@@ -22,34 +22,20 @@ class TweetsController < ApplicationController
     tweet = Tweet.new
     tweet.message = params.fetch(:tweet).fetch(:message)
     tweet.user_id = params.fetch(:tweet).fetch(:user_id)
-    tweet.save
+    if tweet.save
+      redirect_to tweet_path(tweet)
+    else
+      redirect_to tweets_path
+    end
   end
 
   def update
-
   end
 
   def destroy
-
+    if Tweet.exists?(params[:id])
+      Tweet.destroy(params[:id])
+    end
+    redirect_to tweets_path
   end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
